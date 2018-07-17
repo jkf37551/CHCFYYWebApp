@@ -1,0 +1,54 @@
+﻿@model DLL.Models.MainDB.UserModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>鸿翔开发管理系统</title>
+    @Styles.Render("~/Content/assets")
+    @Scripts.Render("~/bundles/assets")
+</head>
+<body>
+    <div class="header">
+
+        <div class="dl-title">
+            &diams;鸿翔开发管理系统&diams;
+        </div>
+
+        <div class="dl-log">
+            欢迎您，<span class="dl-log-user">@Model.USER_NAME|@Model.USER_USERID.Trim()</span><a href="/home/login" title="注销" class="dl-log-quit">[注销]</a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="dl-main-nav">
+            <div class="dl-inform"><div class="dl-inform-title"><s class="dl-inform-icon dl-up"></s></div></div>
+            <ul id="J_Nav" class="nav-list ks-clear">
+                @{
+                    List<HXWebApp.Models.TreeModel> menuList = ViewBag.menuList;
+                    foreach (var v in menuList)
+                    {
+                        <li class="nav-item dl-selected"><div class="nav-item-inner nav-home">@v.text</div></li>
+                    }
+                }
+            </ul>
+        </div>
+        <ul id="J_NavContent" class="dl-tab-conten"></ul>
+    </div>
+    <script>
+        BUI.use('common/main', function () {
+            var config=@Html.Raw(ViewBag.menuStr);
+            new PageUtil.MainPage({
+                modulesConfig: config
+            });
+        });
+    </script>
+    <div style="text-align:center;">
+        <hr />
+        <p>&copy; @DateTime.Now.Year - 云南鸿翔一心堂药业(集团)股份有限公司</p>
+    </div>
+</body>
+</html>
